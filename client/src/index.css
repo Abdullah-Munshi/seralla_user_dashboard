@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #ef274b;
+  --color-secondary: #f9f9f9;
+  --color-tertiary: #525355;
+  --font-inter: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--font-inter);
+  color: #000000;
+  background-color: var(--color-secondary);
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 24px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 4px solid lightblue;
+  border-right-color: #ef274b;
+  animation: l2 1s infinite linear;
+}
+@keyframes l2 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.style-2 .loader {
+  border: 4px solid #fff;
+  border-right-color: #c0304a;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s;
+}
+.show-loader .loader {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mail-field[readonly] {
+  outline: none;
+  cursor: not-allowed;
+}
+.mail-field:not([readonly]):focus {
+  border-color: #ef274b;
+}
