@@ -14,7 +14,7 @@ const userRoutes = require("./routes/userRoutes");
 const kycRoutes = require("./routes/kycRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
-app.use("/api", authRoutes, userRoutes, kycRoutes, paymentRoutes);
+app.use("/api/v1", authRoutes, userRoutes, kycRoutes, paymentRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

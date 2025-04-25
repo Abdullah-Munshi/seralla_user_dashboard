@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import config from "../config";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     // Prevent default form behavior
@@ -13,12 +15,13 @@ const Login = () => {
 
     // Basic validation
     if (!username || !password) {
-      setError("Username and password are required");
+      toast.error("Username and password are required");
       return;
     }
 
     try {
-      const response = await fetch(`${config.baseUrl}/api/login`, {
+      setIsLoading(true);
+      const response = await fetch(`${config.baseUrl}/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,34 +32,34 @@ const Login = () => {
           password,
         }),
       });
-
+      const data = await response.json();
       if (!response.ok) {
-        console.log(response);
-        throw new Error("Invalid Credentials");
+        // console.log(response);
+        throw new Error(data.error?.message || "Login failed");
       }
 
-      const data = await response.json();
+      if (!data.success || !data.data?.token) {
+        throw new Error("Invalid response from server");
+      }
 
-      // On success, store the token in localStorage
-      sessionStorage.setItem("token", data.token);
+      // Store token in session storage
+      sessionStorage.setItem("token", data.data.token);
 
       // Redirect to dashboard
       navigate("/");
     } catch (err) {
-      console.error("Login failed:", err.message);
-      // You might want to set an error state to display to the user
-      setError(err.message || "Login failed. Please try again.");
+      console.error("Login failed:", err);
+      toast.error(err.message || "Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    // Check if the user is already logged in
     const token = sessionStorage.getItem("token");
     if (token) {
-      navigate("/"); // Redirect to dashboard if already logged in
+      navigate("/");
     }
-
-    console.log("Login component mounted");
   }, []);
   return (
     <div className="bg-transparent flex flex-col items-center justify-center h-screen px-4">
@@ -67,7 +70,6 @@ const Login = () => {
         <h1 className="text-4xl font-bold mb-8 text-center text-tertiary">
           Login
         </h1>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
         <input
           type="text"
           placeholder="Username"
@@ -86,8 +88,11 @@ const Login = () => {
         />
         <button
           type="submit"
-          className="h-[48px] bg-primary text-lg font-medium text-white rounded-xl px-4 py-2 w-full cursor-pointer transition duration-200"
+          className={`h-[48px] bg-primary text-lg font-medium text-white rounded-xl px-4 py-2 w-full cursor-pointer transition duration-200 flex items-center justify-center gap-2 style-2 ${
+            isLoading && "show-loader"
+          }`}
         >
+          <Loader />
           Login
         </button>
       </form>

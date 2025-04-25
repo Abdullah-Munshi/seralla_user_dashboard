@@ -28,14 +28,17 @@ function Dashboard() {
     // Fetch user data from the backend (dashboard)
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.baseUrl}/api/user/dashboard`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        });
+        const response = await fetch(
+          `${config.baseUrl}/api/v1/user/dashboard`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
