@@ -11,17 +11,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
-      <Toaster
-      // toastOptions={{
-      //   success: {
-      //     duration: 2000,
-      //     iconTheme: {
-      //       primary: "green",
-      //       secondary: "black",
-      //     },
-      //   },
-      // }}
-      />
+      <Toaster />
     </>
   );
 };

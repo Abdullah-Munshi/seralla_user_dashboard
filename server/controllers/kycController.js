@@ -8,7 +8,7 @@ exports.startKyc = async (req, res) => {
     reference: `SP_${Math.floor(Math.random() * 900) + 1000}_${
       req.user.userId
     }`,
-    callback_url: "https://serrala.globalsimguide.com/api/user/kyc-status",
+    callback_url: "https://serrala.globalsimguide.com/api/v1/kyc/status",
     redirect_url: "https://serrala.globalsimguide.com/",
     document: {
       supported_types: ["id_card", "driving_license", "passport"],
@@ -32,9 +32,19 @@ exports.startKyc = async (req, res) => {
     });
 
     const data = await response.json();
-    res.status(200).json({ success: true, data: data });
+    res.status(200).json({
+      success: true,
+      data: data,
+      message: "KYC request initiated.",
+    });
   } catch (error) {
-    res.status(500).json("something wrong");
+    res.status(500).json({
+      success: false,
+      error: {
+        code: "KYC_FAILED",
+        message: "KYC request failed!",
+      },
+    });
   }
 };
 
@@ -44,8 +54,17 @@ exports.kycCallback = async (req, res) => {
 
   if (result.event === "verification.accepted") {
     await db.query("UPDATE users SET kyc_status = ? WHERE id = ?", [1, userId]);
-    res.status(200).json("User verified");
+    res.status(200).json({
+      success: true,
+      message: "User Verified!",
+    });
   } else {
-    res.status(401).json("User not verified");
+    res.status(401).json({
+      success: false,
+      error: {
+        code: "VERIFICATION_FAILED",
+        message: "User not verified!",
+      },
+    });
   }
 };

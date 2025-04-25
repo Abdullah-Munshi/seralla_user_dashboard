@@ -7,6 +7,6 @@ const {
 const authenticateToken = require("../middleware/authenticateToken");
 
 router.get("/user/dashboard", authenticateToken, getDashboard);
-router.post("/user/paypal-email", authenticateToken, updatePaypalEmail);
+router.post("/user/paypal", authenticateToken, updatePaypalEmail);
 
 module.exports = router;

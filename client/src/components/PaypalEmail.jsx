@@ -27,11 +27,11 @@ const PaypalEmail = ({ paypalEmail }) => {
       toast.error("Please enter a valid PayPal email.");
       return;
     }
-    setLoading(true);
 
     try {
+      setLoading(true);
       const token = sessionStorage.getItem("token");
-      const res = await fetch(`${config.baseUrl}/api/user/paypal-email`, {
+      const res = await fetch(`${config.baseUrl}/api/v1/user/paypal`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -42,28 +42,26 @@ const PaypalEmail = ({ paypalEmail }) => {
 
       const data = await res.json();
 
-      if (res.ok) {
-        toast.success("Email saved successfully!");
-        setLoading(false);
-        setIsEditing(false);
-        setShowEditBtn(true);
-      } else {
-        toast.error(data.error || "Something went wrong.");
+      if (!res.ok) {
+        throw new Error(data.error?.message || "Failed to save Email.");
       }
+
+      if (!data.success) {
+        toast.error(
+          data.error?.message || "An error occurred while saving your email."
+        );
+        setLoading(false);
+        return;
+      }
+
+      toast.success("Email saved successfully!");
+      setLoading(false);
+      setIsEditing(false);
+      setShowEditBtn(true);
     } catch (err) {
       console.error("Email save error:", err);
-
-      if (err.name === "TypeError" && err.message.includes("fetch")) {
-        toast.error(
-          "Network error. Please check your connection and try again."
-        );
-      } else if (err.name === "SyntaxError") {
-        toast.error(
-          "Received invalid response from server. Please contact support."
-        );
-      } else {
-        toast.error("Failed to save paypal email. Please try again later.");
-      }
+      toast.error("An error occurred while saving your email.");
+      setLoading(false);
     }
   };
 
