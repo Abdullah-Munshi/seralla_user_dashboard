@@ -20,9 +20,9 @@ async function testConnection() {
     return false;
   }
 }
+await testConnection();
 
 export default {
-  pool,
   query: async (sql, params) => {
     try {
       const [results] = await pool.execute(sql, params);

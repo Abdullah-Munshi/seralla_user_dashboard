@@ -1,7 +1,5 @@
 import db from "../config/db.js";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET || "blackcat0";
+import { generateToken } from "../config/jwt.js";
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -34,12 +32,8 @@ export const login = async (req, res) => {
       });
     }
 
-    // Generate JWT token
-    const token = jwt.sign(
-      { userId: user.id, username: user.username },
-      JWT_SECRET,
-      { expiresIn: "24h" } // Token expires in 24 hours
-    );
+    // Generate token
+    generateToken({ userId: user.id, username: user.username }); // payload
 
     // Send response with token and user info
     return res.json({
