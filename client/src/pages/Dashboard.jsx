@@ -14,16 +14,10 @@ import config from "../config";
 function Dashboard() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [fallback, setFallback] = useState(false); // Fallback state
-  const navigate = useNavigate();
+  const [fallback, setFallback] = useState(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token"); // Retrieve token from sessionStorage
-
-    if (!token) {
-      navigate("/login");
-      return;
-    }
 
     // Fetch user data
     const fetchData = async () => {
