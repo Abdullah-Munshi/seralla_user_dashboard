@@ -33,7 +33,7 @@ export const login = async (req, res) => {
     }
 
     // Generate token
-    generateToken({ userId: user.id, username: user.username }); // payload
+    const token = generateToken({ userId: user.id, username: user.username }); // payload
 
     // Send response with token and user info
     return res.json({
