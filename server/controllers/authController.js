@@ -1,7 +1,8 @@
-const db = require("../config/db.js"); // Assuming you have a db module to handle database operations
-const jwt = require("jsonwebtoken");
+import db from "../config/db.js";
+import jwt from "jsonwebtoken";
+
 const JWT_SECRET = process.env.JWT_SECRET || "blackcat0";
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 

@@ -1,5 +1,5 @@
-const db = require("../config/db.js");
-exports.requestPayment = async (req, res) => {
+import db from "../config/db.js";
+export const requestPayment = async (req, res) => {
   try {
     if (!req.body.amount) {
       return res.status(400).json({

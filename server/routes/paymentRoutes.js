@@ -1,8 +1,9 @@
-const express = require("express");
+import express from "express";
+import { requestPayment } from "../controllers/paymentController.js"; // ✅ import named export + .js
+import authenticateToken from "../middleware/authenticateToken.js"; // ✅ import default export + .js
+
 const router = express.Router();
-const { requestPayment } = require("../controllers/paymentController");
-const authenticateToken = require("../middleware/authenticateToken");
 
 router.post("/payments/request", authenticateToken, requestPayment);
 
-module.exports = router;
+export default router;

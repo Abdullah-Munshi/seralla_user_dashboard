@@ -1,9 +1,10 @@
-const express = require("express");
+import express from "express";
+import { startKyc, kycCallback } from "../controllers/kycController.js"; // ✅ import with .js
+import authenticateToken from "../middleware/authenticateToken.js"; // ✅ import with .js
+
 const router = express.Router();
-const { startKyc, kycCallback } = require("../controllers/kycController");
-const authenticateToken = require("../middleware/authenticateToken");
 
 router.post("/kyc/initiate", authenticateToken, startKyc);
 router.post("/kyc/status", kycCallback);
 
-module.exports = router;
+export default router;

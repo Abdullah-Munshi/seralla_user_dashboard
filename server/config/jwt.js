@@ -1,3 +1,3 @@
-module.exports = {
-  JWT_SECRET: process.env.JWT_SECRET || "blackcat0",
-};
+const JWT_SECRET = process.env.JWT_SECRET || "blackcat0";
+
+export default JWT_SECRET;

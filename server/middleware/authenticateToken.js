@@ -1,6 +1,7 @@
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config/jwt");
-const authenticateToken = (req, res, next) => {
+import jwt from "jsonwebtoken";
+import JWT_SECRET from "../config/jwt.js";
+
+const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
@@ -31,4 +32,4 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-module.exports = authenticateToken;
+export default authenticateToken;

@@ -1,5 +1,8 @@
-const express = require("express");
+import express from "express";
+import { login } from "../controllers/authController.js"; // ✅ ESM needs .js extension
+
 const router = express.Router();
-const { login } = require("../controllers/authController");
+
 router.post("/auth/login", login);
-module.exports = router;
+
+export default router;

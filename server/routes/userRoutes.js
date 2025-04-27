@@ -1,12 +1,13 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from "express";
+import {
   getDashboard,
   updatePaypalEmail,
-} = require("../controllers/userController");
-const authenticateToken = require("../middleware/authenticateToken");
+} from "../controllers/userController.js"; // ✅ named import + .js
+import authenticateToken from "../middleware/authenticateToken.js"; // ✅ default import + .js
+
+const router = express.Router();
 
 router.get("/user/dashboard", authenticateToken, getDashboard);
 router.post("/user/paypal", authenticateToken, updatePaypalEmail);
 
-module.exports = router;
+export default router;

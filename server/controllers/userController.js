@@ -1,5 +1,5 @@
-const db = require("../config/db");
-exports.getDashboard = async (req, res) => {
+import db from "../config/db.js";
+export const getDashboard = async (req, res) => {
   try {
     const userId = req.user.userId;
 
@@ -46,7 +46,7 @@ exports.getDashboard = async (req, res) => {
   }
 };
 
-exports.updatePaypalEmail = async (req, res) => {
+export const updatePaypalEmail = async (req, res) => {
   try {
     const { email } = req.body;
     const userId = req.user.userId;

@@ -1,7 +1,4 @@
-// server/db.js
-const mysql = require("mysql2/promise");
-require("dotenv").config();
-
+import mysql from "mysql2/promise";
 const pool = mysql.createPool({
   connectionLimit: process.env.DB_CONN_LIMIT || 10,
   host: process.env.DB_HOST,
@@ -24,7 +21,7 @@ async function testConnection() {
   }
 }
 
-module.exports = {
+export default {
   pool,
   query: async (sql, params) => {
     try {
