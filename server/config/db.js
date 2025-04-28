@@ -8,19 +8,23 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT || 3306,
 });
 
-// Test the connection
+// Test the connection only in development
 async function testConnection() {
   try {
     const connection = await pool.getConnection();
-    console.log("Database connection established successfully");
+    console.log("✅ Database connection established successfully");
     connection.release();
-    return true;
   } catch (error) {
-    console.error("Error connecting to the database:", error);
-    return false;
+    console.error("❌ Error connecting to the database:", error);
+    // Optional: exit the process if connection fails during dev
+    process.exit(1);
   }
 }
-await testConnection();
+
+// Only test if in development
+if (process.env.NODE_ENV === "development") {
+  await testConnection();
+}
 
 export default {
   query: async (sql, params) => {
