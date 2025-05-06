@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const dotenv = require("dotenv");
+const env = process.env.NODE_ENV.trim() || "development";
+dotenv.config({ path: `.env.${env}` });
+
+console.log("DB name is : ", process.env.DB_NAME);
 const app = express();
 
 // Middleware
