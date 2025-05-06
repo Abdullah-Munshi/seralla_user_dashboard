@@ -1,5 +1,4 @@
-import { verifyToken } from "../config/jwt.js";
-
+const { verifyToken } = require("../config/jwt.js");
 const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -29,4 +28,4 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
-export default authenticateToken;
+module.exports = authenticateToken;

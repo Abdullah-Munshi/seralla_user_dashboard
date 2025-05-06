@@ -17,8 +17,7 @@ function Dashboard() {
   const [fallback, setFallback] = useState(false);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token"); // Retrieve token from sessionStorage
-
+    const token = sessionStorage.getItem("token");
     // Fetch user data
     const fetchData = async () => {
       try {
@@ -43,6 +42,7 @@ function Dashboard() {
           );
         }
         if (!data.success) {
+          console.log("data is not success");
           throw new Error(data.error?.message || "Failed to fetch user data");
         }
         setData(data.data);

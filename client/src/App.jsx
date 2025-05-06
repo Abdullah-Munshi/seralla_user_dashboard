@@ -19,7 +19,11 @@ const App = () => {
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          duration: 4000,
+        }}
+      />
     </>
   );
 };

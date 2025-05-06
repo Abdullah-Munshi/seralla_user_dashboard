@@ -1,4 +1,4 @@
-import mysql from "mysql2/promise";
+const mysql = require("mysql2/promise");
 const pool = mysql.createPool({
   connectionLimit: process.env.DB_CONN_LIMIT || 10,
   host: process.env.DB_HOST,
@@ -21,12 +21,7 @@ async function testConnection() {
   }
 }
 
-// Only test if in development
-if (process.env.NODE_ENV === "development") {
-  await testConnection();
-}
-
-export default {
+module.exports = {
   query: async (sql, params) => {
     try {
       const [results] = await pool.execute(sql, params);

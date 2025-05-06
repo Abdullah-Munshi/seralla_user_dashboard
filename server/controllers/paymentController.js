@@ -1,5 +1,5 @@
-import db from "../config/db.js";
-export const requestPayment = async (req, res) => {
+const db = require("../config/db");
+exports.requestPayment = async (req, res) => {
   try {
     if (!req.body.amount) {
       return res.status(400).json({
@@ -22,7 +22,7 @@ export const requestPayment = async (req, res) => {
         success: true,
         data: {},
         message:
-          "Your payment request under review. please wait till we process it.",
+          "Your withdrawal request has been submitted and is under review.",
       });
     }
 

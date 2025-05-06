@@ -1,5 +1,5 @@
-import db from "../config/db.js";
-export const getDashboard = async (req, res) => {
+const db = require("../config/db");
+exports.getDashboard = async (req, res) => {
   try {
     const userId = req.user.userId;
 
@@ -21,7 +21,10 @@ export const getDashboard = async (req, res) => {
     // Format the response data to match frontend needs
     const dashboardData = {
       username: userData.username,
-      mission: userData.mission,
+      mission: {
+        text: userData.mission,
+        status: userData.mission_status,
+      },
       balance: userData.balance,
       paypalEmail: userData.paypal_email,
       kycStatus: userData.kyc_status,
@@ -46,7 +49,7 @@ export const getDashboard = async (req, res) => {
   }
 };
 
-export const updatePaypalEmail = async (req, res) => {
+exports.updatePaypalEmail = async (req, res) => {
   try {
     const { email } = req.body;
     const userId = req.user.userId;

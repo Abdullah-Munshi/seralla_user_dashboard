@@ -1,5 +1,5 @@
-import db from "../config/db.js";
-export const startKyc = async (req, res) => {
+const db = require("../config/db");
+exports.startKyc = async (req, res) => {
   const token = btoa(
     `${process.env.SHUFTI_CLIENT_ID}:${process.env.SHUFTI_SECRET_KEY}`
   );
@@ -48,7 +48,7 @@ export const startKyc = async (req, res) => {
   }
 };
 
-export const kycCallback = async (req, res) => {
+exports.kycCallback = async (req, res) => {
   const result = req.body;
   const userId = parseInt(result.reference.split("_")[2]);
 

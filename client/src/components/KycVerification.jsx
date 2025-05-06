@@ -23,11 +23,15 @@ const KycVerification = ({ kycStatus }) => {
       if (!data.success) {
         throw new Error(data.error?.message || "KYC request failed");
       }
-      toast.success(data.message);
+      toast.success(data.message, {
+        id: "toast-success",
+      });
       window.location.href = data.data.verification_url;
     } catch (err) {
       console.error("KYC request error:", err);
-      toast.error(err.message || "KYC request failed!");
+      toast.error(err.message || "KYC request failed!", {
+        id: "toast-error",
+      });
     } finally {
       setLoading(false);
     }

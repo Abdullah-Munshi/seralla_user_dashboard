@@ -1,6 +1,6 @@
-import express from "express";
-import cors from "cors";
-import "dotenv/config";
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 const app = express();
 
 // Middleware
@@ -8,10 +8,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import kycRoutes from "./routes/kycRoutes.js";
-import paymentRoutes from "./routes/paymentRoutes.js";
+const authRoutes = require("./routes/authRoutes.js");
+const userRoutes = require("./routes/userRoutes.js");
+const kycRoutes = require("./routes/kycRoutes.js");
+const paymentRoutes = require("./routes/paymentRoutes.js");
 
 app.use("/api/v1", authRoutes, userRoutes, kycRoutes, paymentRoutes);
 

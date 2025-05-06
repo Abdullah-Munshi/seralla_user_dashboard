@@ -1,6 +1,6 @@
-import db from "../config/db.js";
-import { generateToken } from "../config/jwt.js";
-export const login = async (req, res) => {
+const db = require("../config/db");
+const { generateToken } = require("../config/jwt");
+exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 

@@ -21,10 +21,14 @@ const PaypalEmail = ({ paypalEmail }) => {
   const handleForm = async (e) => {
     e.preventDefault();
     if (email === "") {
-      toast.error("Please enter your PayPal email.");
+      toast.error("Please enter your PayPal email.", {
+        id: "toast-error",
+      });
       return;
     } else if (!isValidEmail(email)) {
-      toast.error("Please enter a valid PayPal email.");
+      toast.error("Please enter a valid PayPal email.", {
+        id: "toast-error",
+      });
       return;
     }
 
@@ -48,19 +52,26 @@ const PaypalEmail = ({ paypalEmail }) => {
 
       if (!data.success) {
         toast.error(
-          data.error?.message || "An error occurred while saving your email."
+          data.error?.message || "An error occurred while saving your email.",
+          {
+            id: "toast-error",
+          }
         );
         setLoading(false);
         return;
       }
 
-      toast.success("Email saved successfully!");
+      toast.success("Email saved successfully!", {
+        id: "toast-success",
+      });
       setLoading(false);
       setIsEditing(false);
       setShowEditBtn(true);
     } catch (err) {
       console.error("Email save error:", err);
-      toast.error("An error occurred while saving your email.");
+      toast.error("An error occurred while saving your email.", {
+        id: "toast-error",
+      });
       setLoading(false);
     }
   };
@@ -74,7 +85,7 @@ const PaypalEmail = ({ paypalEmail }) => {
     <Box>
       <div className="flex items-center gap-2 mb-2">
         <EnvelopeIcon className="h-6 w-6 " />
-        <BlkTitle>PayPal Email</BlkTitle>
+        <BlkTitle>Enter your PayPal email</BlkTitle>
       </div>
       <form onSubmit={handleForm}>
         <div className="relative">

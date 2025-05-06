@@ -13,9 +13,6 @@ const ReImbursement = () => {
           Transportation costs are not automatically included. Please send your
           receipts to your recruiter to be reimbursed.
         </p>
-        <button className="inline-block text-primary text-base cursor-pointer text-semibold mt-4">
-          Contact your recruiter
-        </button>
       </div>
     </Box>
   );

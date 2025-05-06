@@ -10,11 +10,16 @@ const Payment = ({ userData }) => {
   const handlePaymentRequest = async () => {
     const balance = parseInt(userData.balance);
     if (balance <= 0) {
-      toast.error("You don't have enough balance to send payment request.");
+      toast.error("You don't have enough balance to send payment request.", {
+        id: "toast-error",
+      });
       return;
     } else if (balance > 0 && userData.kycStatus === 0) {
       toast.error(
-        "Please complete your KYC verification first to send payment request."
+        "Please complete your KYC verification first to send payment request.",
+        {
+          id: "toast-error",
+        }
       );
       return;
     } else if (balance > 0 && userData.kycStatus === 1) {
@@ -22,7 +27,9 @@ const Payment = ({ userData }) => {
         setIsLoading(true);
         const token = sessionStorage.getItem("token");
         if (!token) {
-          toast.error("Please login first to request payment.");
+          toast.error("Please login first to request payment.", {
+            id: "toast-error",
+          });
           return;
         }
 
@@ -44,12 +51,17 @@ const Payment = ({ userData }) => {
         if (!response.ok) {
           throw new Error(data.error?.message || "Payment Request Failed!");
         }
-        toast.success(data.message);
+        toast.success(data.message, {
+          id: "toast-success",
+        });
         userData.paymentRequestStatus = 1;
       } catch (err) {
         console.error("Payment request error:", err);
         toast.error(
-          err.message || "Failed to request payment. Please try again later."
+          err.message || "Failed to request payment. Please try again later.",
+          {
+            id: "toast-error",
+          }
         );
       } finally {
         setIsLoading(false);
@@ -75,6 +87,13 @@ const Payment = ({ userData }) => {
           <p className="text-sm sm:text-base">
             You will receive ${userData.balance} upon successful completion.
           </p>
+          {userData.paymentRequestStatus === 1 && (
+            <p className="text-sm text-green-600 mt-1">
+              Your withdrawal request submitted on{" "}
+              {formatDate(userData.paymentRequestedTime || Date.now())}, is
+              under review.
+            </p>
+          )}
         </div>
       </Box>
 
@@ -85,14 +104,8 @@ const Payment = ({ userData }) => {
         }`}
       >
         <Loader />
-        Request Payment payout
+        Withdraw Funds
       </button>
-      {userData.paymentRequestStatus === 1 && (
-        <p className="text-sm text-green-600 mt-1">
-          Your payment request initiated at{" "}
-          {formatDate(userData.paymentRequestedTime || Date.now())}
-        </p>
-      )}
     </>
   );
 };

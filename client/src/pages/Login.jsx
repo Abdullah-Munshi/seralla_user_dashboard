@@ -15,7 +15,9 @@ const Login = () => {
 
     // Basic validation
     if (!username || !password) {
-      toast.error("Username and password are required");
+      toast.error("Username and password are required", {
+        id: "toast-error",
+      });
       return;
     }
 
@@ -49,7 +51,9 @@ const Login = () => {
       navigate("/");
     } catch (err) {
       console.error("Login failed:", err);
-      toast.error(err.message || "Login failed. Please try again.");
+      toast.error(err.message || "Login failed. Please try again.", {
+        id: "toast-error",
+      });
     } finally {
       setIsLoading(false);
     }
