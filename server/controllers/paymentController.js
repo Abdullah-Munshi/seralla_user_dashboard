@@ -18,7 +18,7 @@ exports.requestPayment = async (req, res) => {
     );
 
     if (result.payment_request_status === 1) {
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
         data: {},
         message:
